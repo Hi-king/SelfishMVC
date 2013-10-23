@@ -11,6 +11,8 @@ class Router {
   }
 
   function getAction($request) {
+    self::compileRoutes();
+
     global $route; /* TODO: stop using global */
     foreach($route as $matcher => $action) {
       /* TODO: GET params with reqexp */
@@ -19,5 +21,26 @@ class Router {
       }
     }
     return False; //TODO: raise error
+  }
+
+  function compileRoutes() {
+    global $route; 
+    $compiled_route = array();
+
+    foreach($route as $matcher => $action) {
+      $path_fragments = explode('/', $matcher);
+      $compiled_fragments = array();
+      foreach($path_fragments as $path_fragment) {
+        echo $path_fragment;
+        $compiled_fragments[] = $path_fragment;
+      }
+      print_r($compiled_fragments);
+      print implode('/', $compiled_fragments);
+
+
+      throw new Exception("Not Implemented");
+
+
+    }
   }
 }

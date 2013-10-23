@@ -6,16 +6,27 @@ class RouterTest extends PHPUnit_Framework_TestCase
 {
   function setup() {
     global $route;
-    $route = array('/test'=>array('controller'=>'Test'),);
-    $fakeparam = array('REQUEST_URI'=>'/test', 'SCRIPT_NAME'=>'');
-    $this->fakerequest = new Request($fakeparam);
+    $route = array('/test'=>array('controller'=>'Test'),
+                   array('/param/:id/')=>array());
   }
 
-  public function testGetAction()
-  {
+  public function testGetAction() {
+    /* basic rounting test */
     self::setup();
 
-    $action = Router::getAction($this->fakerequest);
+    $fakeparam = array('REQUEST_URI'=>'/test', 'SCRIPT_NAME'=>'');
+    $fakerequest = new Request($fakeparam);
+    $action = Router::getAction($fakerequest);
     $this->assertEquals($action['controller'], 'Test');
+  }
+
+  public function testGetPathParameters() {
+    /* rounting and extract parameters */
+    self::setup();
+
+    $fakeparam = array('REQUEST_URI'=>'/param/1/', 'SCRIPT_NAME'=>'');
+    $fakerequest = new Request($fakeparam);
+    $action = Router::getAction($fakerequest);
+    $this->assertEquals($action['id'], '1');
   }
 }
