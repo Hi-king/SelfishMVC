@@ -30,17 +30,29 @@ class Router {
     foreach($route as $matcher => $action) {
       $path_fragments = explode('/', $matcher);
       $compiled_fragments = array();
+      $compiled_groupnames = array();
+      
+
       foreach($path_fragments as $path_fragment) {
-        echo $path_fragment;
+        if($path_fragment[0] === ":") {
+          $compiled_groupnames[]= substr($path_fragment, 1, strlen($path_fragment));
+          $path_fragment = "(.*)";
+        }
+        
+
         $compiled_fragments[] = $path_fragment;
       }
-      print_r($compiled_fragments);
-      print implode('/', $compiled_fragments);
 
+      $compiled_matcher = implode('/', $compiled_fragments);      
+      $compiled_eachroute = array(
+                                  'matcher' => $compiled_matcher,
+                                  'name' => $compiled_groupnames,
+                                 );
 
-      throw new Exception("Not Implemented");
-
+      $compiled_route[] = $compiled_eachroute;
+      
 
     }
+    print_r($compiled_route);
   }
 }
