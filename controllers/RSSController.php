@@ -6,4 +6,6 @@ class RSSController{
   function top() {
     echo "<p>Top page?</p>";
   }
+  function param($id) {
+    echo sprintf("<h1>id = %s</h1", $id);  }
 }
