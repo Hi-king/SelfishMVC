@@ -1,11 +1,15 @@
 <?php
-require_once 'conf/route.php'; /* TODO: Sophisticated Loader */
-require_once 'controllers/RSSController.php'; /* TODO: Namespace... */
+require_once dirname(__FILE__).'/../conf/route.php'; /* TODO: Sophisticated Loader */
+require_once dirname(__FILE__).'/../controllers/RSSController.php'; /* TODO: Namespace... */
 
 class Router {
-  static $compiled_route;
+  private $compiled_route;
+  private $route;
+  function __Construct($route) {
+    $this->route = $route;
+  }
 
-  public static function resolve($request) {
+  public function resolve($request) {
     /* call controller::action using $request */
     $action = self::getAction($request);
     
@@ -14,10 +18,10 @@ class Router {
     call_user_func_array(array($controller, $action['action']), $action['params']);
   }
 
-  static function getAction($request) {
+  function getAction($request) {
     /* get action, controller, params from request */
-    self::compileRoutes();
-    foreach(self::$compiled_route as $routedef) {
+    $this->compileRoutes();
+    foreach($this->compiled_route as $routedef) {
       if(preg_match($routedef['matcher'], $request->path_info, $matches)) {
         $params = array();
         if(array_key_exists('argnames', $routedef)) {
@@ -35,13 +39,12 @@ class Router {
     return False; //TODO: raise error
   }
 
-  static function compileRoutes() {
+  function compileRoutes() {
     /* compile routing definitions into Regexp */
     /* TODO: regexp escape */
-    global $route; 
-    self::$compiled_route = array();
+    $this->compiled_route = array();
 
-    foreach($route as $matcher => $action) {
+    foreach($this->route as $matcher => $action) {
       $path_fragments = explode('/', $matcher);
       $compiled_fragments = array();
       $compiled_groupnames = array();
@@ -61,7 +64,7 @@ class Router {
       $compiled_eachroute['paramname'] = $compiled_groupnames;
       $compiled_eachroute['matcher'] = $compiled_matcher;
 
-      self::$compiled_route[] = $compiled_eachroute;
+      $this->compiled_route[] = $compiled_eachroute;
     }
   }
 }
