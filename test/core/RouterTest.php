@@ -5,9 +5,10 @@ require_once dirname(__FILE__).'/../../core/Request.php';
 class RouterTest extends PHPUnit_Framework_TestCase
 {
   function setup() {
-    global $route;
-    $route = array('/test'=>array('controller'=>'Test'),
-                   '/param/:id/:name/'=>array('argnames' => array('name', 'id')));
+    $this->router = new Router(
+      array('/test'=>array('controller'=>'Test'),
+            '/param/:id/:name/'=>array('argnames' => array('name', 'id')))
+    );
   }
 
   public function testGetAction() {
@@ -16,7 +17,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
     $fakeparam = array('REQUEST_URI'=>'/test', 'SCRIPT_NAME'=>'');
     $fakerequest = new Request($fakeparam);
-    $action = Router::getAction($fakerequest);
+    $action = $this->router->getAction($fakerequest);
     $this->assertEquals('Test', $action['controller']);
   }
 
@@ -26,7 +27,7 @@ class RouterTest extends PHPUnit_Framework_TestCase
 
     $fakeparam = array('REQUEST_URI'=>'/param/1/me/', 'SCRIPT_NAME'=>'');
     $fakerequest = new Request($fakeparam);
-    $action = Router::getAction($fakerequest);
+    $action = $this->router->getAction($fakerequest);
     $this->assertEquals(array('me', '1'), $action['params']);
   }
 }
