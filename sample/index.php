@@ -3,6 +3,7 @@ require_once '../Application.php';
 
 class RSSApplication extends Application {
   protected function route() {
+     require_once dirname(__FILE__).'/controllers/RSSController.php'; /* TODO: Namespace... */
     return array(
       '/hello/' => array(
            'controller' => 'RSSController', 
