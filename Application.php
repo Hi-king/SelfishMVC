@@ -1,10 +1,14 @@
 <?php
 class Application {
   function __Construct() {
-    require_once 'core/Request.php';
-    require_once 'core/Router.php';
+    // Load pathes
+    require_once 'core/CoreBootLoader.php';
+    $this->boot_loader();
+    // avoid require using relative path
+    // TODO: avoid that using absolute path ...
+    ini_set('include_path', '');
+
     $this->router = new Router($this->route());
-    
   }
 
   public function run($server) {
@@ -13,6 +17,10 @@ class Application {
   }
 
   protected function controller_loader() {
+
+  }
+
+  protected function boot_loader() {
 
   }
 

@@ -1,6 +1,4 @@
 <?php
-// require_once dirname(__FILE__).'/../conf/route.php'; /* TODO: Sophisticated Loader */
-// require_once dirname(__FILE__).'/../controllers/RSSController.php'; /* TODO: Namespace... */
 
 class Router {
   private $compiled_route;
