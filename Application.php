@@ -17,6 +17,7 @@ class Application {
   }
 
   protected function controller_loader() {}
+  //Application specific boot loader
   protected function boot_loader() {}
   protected function route() {}
   protected function get_smarty() {}
