@@ -11,9 +11,10 @@ class RSSApplication extends Application {
      
     // routing definition
     return array(
-      '/hello/' => array(
-        'controller' => 'RSSController', 
-        'action' => 'hello'
+      '/hello/:id/' => array(
+        'controller' => 'RSSController',
+        'action' => 'hello',
+        'argnames' => array('id')
       ),
       '/top/' => array(
         'controller' => 'RSSController', 
@@ -25,6 +26,18 @@ class RSSApplication extends Application {
         'argnames' => array('id')
       ),
     );
+  }
+
+  /*********************
+    Smarty config
+   *********************/
+  protected function get_smarty() {
+    $smarty = new Smarty();
+    $smarty->template_dir = dirname(__FILE__).'/view/templates/';
+    $smarty->compile_dir  = dirname(__FILE__).'/view/templates_c/';
+    $smarty->config_dir   = dirname(__FILE__).'/view/config/';
+    $smarty->cache_dir    = dirname(__FILE__).'/view/cache/';
+    return $smarty;
   }
 }
 

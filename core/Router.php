@@ -3,16 +3,15 @@
 class Router {
   private $compiled_route;
   private $route;
-  function __Construct($route) {
+  function __Construct($route, $smarty) {
     $this->route = $route;
+    $this->smarty = $smarty;
   }
 
   public function resolve($request) {
     /* call controller::action using $request */
     $action = self::getAction($request);
-    
-    echo "controller:".$action['controller']."<br/>";
-    $controller = new $action['controller'];
+    $controller = new $action['controller']($this->smarty);
     call_user_func_array(array($controller, $action['action']), $action['params']);
   }
 
@@ -27,7 +26,6 @@ class Router {
             $params[] = $matches[$argname];
           }
         }
-
         $retdict = $routedef;
         $retdict['params'] = $params;
         return $retdict;
