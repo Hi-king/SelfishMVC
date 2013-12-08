@@ -28,9 +28,7 @@ class RSSApplication extends Application {
     );
   }
 
-  /*********************
-    Smarty config
-   *********************/
+  // smarty config
   protected function get_smarty() {
     $smarty = new Smarty();
     $smarty->template_dir = dirname(__FILE__).'/view/templates/';
@@ -44,5 +42,4 @@ class RSSApplication extends Application {
 
 // start Applitcation
 (new RSSApplication())->run($_SERVER);
-
 
