@@ -1,6 +1,4 @@
 <?php
-require_once dirname(__FILE__).'/../models/User.php';
-
 class RSSController extends Controller{
   function __Construct($smarty) {
     parent::__Construct($smarty);
@@ -24,8 +22,9 @@ class RSSController extends Controller{
   }
 
   function rssview($url) {
-    RSS
-    echo "<p>Top page?</p>";
+    $rss = new RSS($url);
+    echo "<p>Top page?".$url."</p>";
+    $rss->get_recent();
   }
 
   function param($id) {

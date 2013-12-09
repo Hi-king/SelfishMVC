@@ -25,7 +25,19 @@ class RSSApplication extends Application {
         'action' => 'param', 
         'argnames' => array('id')
       ),
+      '/show/' => array(
+        'method' => 'GET',
+        'params' => 'url',
+        'controller' => 'RSSController',
+        'action' => 'rssview',
+        'argnames' => array('url')
+      ),
     );
+  }
+  
+  protected function boot_loader() {
+    require_once __DIR__.'/models/User.php';
+    require_once __DIR__.'/models/RSS.php';
   }
 
   // smarty config

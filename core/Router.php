@@ -20,6 +20,10 @@ class Router {
     $this->compileRoutes();
     foreach($this->compiled_route as $routedef) {
       if(preg_match($routedef['matcher'], $request->path_info, $matches)) {
+        // GET/POSTparams
+        // TODO: POST
+        $matches+=$_GET;
+
         $params = array();
         if(array_key_exists('argnames', $routedef)) {
           foreach($routedef['argnames'] as $argname) {
