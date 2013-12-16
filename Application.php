@@ -1,8 +1,9 @@
 <?php
+require_once 'core/CoreBootLoader.php';
+
 class Application {
   function __Construct() {
     // Load pathes
-    require_once 'core/CoreBootLoader.php';
     $this->boot_loader();
     // avoid require using relative path
     // TODO: avoid that using absolute path ...
