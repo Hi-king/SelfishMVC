@@ -18,13 +18,22 @@ class RSSController extends Controller{
     }
   }
   function top() {
-    echo "<p>Top page?</p>";
+    $this->smarty->assign('contents',
+      $this->smarty->fetch('top.tpl')
+    );
+    $this->smarty->display('layout.tpl');
   }
 
   function rssview($url) {
     $rss = new RSS($url);
-    echo "<p>Top page?".$url."</p>";
-    $rss->get_recent();
+    $entries = $rss->get_recent();
+
+    $this->smarty->assign('entries', $entries);
+    $this->smarty->assign('title', $rss->get_title());
+    $this->smarty->assign('contents',
+      $this->smarty->fetch('rsslist.tpl')
+    );
+    $this->smarty->display('layout.tpl');
   }
 
   function param($id) {

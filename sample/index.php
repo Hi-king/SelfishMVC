@@ -34,7 +34,7 @@ class RSSApplication extends Application {
       ),
     );
   }
-  
+
   protected function boot_loader() {
     require_once __DIR__.'/models/User.php';
     require_once __DIR__.'/models/RSS.php';
