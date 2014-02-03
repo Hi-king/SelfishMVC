@@ -30,6 +30,9 @@ class RSSController extends Controller{
 
     $this->smarty->assign('entries', $entries);
     $this->smarty->assign('title', $rss->get_title());
+    //$session = new Session();
+    $this->smarty->assign('uid', (new Session())->getId());
+
     $this->smarty->assign('contents',
       $this->smarty->fetch('rsslist.tpl')
     );

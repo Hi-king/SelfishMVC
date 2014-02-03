@@ -14,6 +14,9 @@
             <ul class="nav">
               <li><a class="brand" href="/selfish/index.php/top/">RSS Reader(β)</a></li>
             </ul>
+            <ul class="nav pull-right">
+              <li>sessionid: {$uid}</li>
+            </ul>
           </div>
         </div>
       </div>

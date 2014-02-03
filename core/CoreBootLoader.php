@@ -3,6 +3,7 @@
 require_once 'Request.php';
 require_once 'Router.php';
 require_once 'Controller.php';
+require_once 'Session.php';
 
 // smarty
 require_once '/usr/local/lib/Smarty-3.1.15/libs/Smarty.class.php';

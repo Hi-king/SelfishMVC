@@ -7,7 +7,7 @@ class Controller{
   function not_found($contents) {
     header("HTTP/1.0 404 Not Found");
     //$this->smarty->display('string:'.$contents);
-    echo $contents;
+    //echo $contents;
     exit(0);
   }
 
