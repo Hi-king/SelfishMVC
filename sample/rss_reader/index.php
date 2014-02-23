@@ -2,14 +2,14 @@
 /*
   Application definition class
  */
+require_once 'vendor/autoload.php'; //composer
 require_once '../../Application.php';
+
+use Doctorine\ORM\Tools\Setup;
+use Doctorine\ORM\EntityManager;
 
 class RSSApplication extends Application {
   protected function route() {
-    // load controllers
-    require_once dirname(__FILE__).'/controllers/RSSController.php'; /* TODO: Namespace... */
-     
-    // routing definition
     return array(
       '/hello/:id/' => array(
         'controller' => 'RSSController',
@@ -32,12 +32,25 @@ class RSSApplication extends Application {
         'action' => 'rssview',
         'argnames' => array('url')
       ),
+
+      //User
+      '/login/' => array(
+        'controller' => 'UserController',
+        'action' => 'login'
+      ),
+      '/logged_in' => array(
+        'controller' => 'UserController',
+        'action' => 'logged_in',
+        'argnames' => array('name')
+      )
     );
   }
 
   protected function boot_loader() {
     require_once __DIR__.'/models/User.php';
     require_once __DIR__.'/models/RSS.php';
+    require_once __DIR__.'/controllers/UserController.php';
+    require_once __DIR__.'/controllers/RSSController.php';
   }
 
   // smarty config
@@ -49,8 +62,18 @@ class RSSApplication extends Application {
     $smarty->cache_dir    = dirname(__FILE__).'/view/cache/';
     return $smarty;
   }
-}
 
+  protected function get_doctrine() {
+    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
+    $conn = array(
+                  'driver'   => 'pdo_mysql',
+                  'user'     => 'root',
+                  'password' => '',
+                  'dbname'   => 'rss_reader'
+                  );
+    return EntityManager::create($conn, $config);
+  }
+}
 
 // start Applitcation
 (new RSSApplication())->run($_SERVER);
