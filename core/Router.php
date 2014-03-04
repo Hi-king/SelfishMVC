@@ -3,15 +3,16 @@
 class Router {
   private $compiled_route;
   private $route;
-  function __Construct($route, $smarty) {
+  function __Construct($route, $smarty, EntityManager $entity_manager) {
     $this->route = $route;
     $this->smarty = $smarty;
+    $this->entity_manager = $entity_manager;
   }
 
   public function resolve($request) {
     /* call controller::action using $request */
     $action = self::getAction($request);
-    $controller = new $action['controller']($this->smarty);
+    $controller = new $action['controller']($this->smarty, $this->entity_manager);
     call_user_func_array(array($controller, $action['action']), $action['params']);
   }
 

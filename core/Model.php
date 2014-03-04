@@ -1,8 +1,15 @@
 <?PHP
 class Model {
-  protected applicateion_class = Application;
-  protected persist() {
-    applicateion_class->get_doctrine()->persist($this);
-    applicateion_class->get_doctrine()->flush();
+  public static  $repo_name = '';
+
+
+  function __Construct(Doctrine\ORM\EntityManager $entity_manager) {
+    $this->entity_manager = $entity_manager;
   }
+
+  public function persist() {
+    $this->entity_manager->persist($this);
+    $this->entity_manager->flush();
+  }
+
 }

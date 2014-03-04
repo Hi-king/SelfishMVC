@@ -1,7 +1,8 @@
 <?php
 class Controller{
-  function __Construct($smarty) {
+  function __Construct($smarty, EntityManager $entity_manager) {
     $this->smarty = $smarty;
+    $this->entity_manager = $entity_manager;
   }
 
   function not_found($contents) {

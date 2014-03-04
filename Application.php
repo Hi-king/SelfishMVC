@@ -12,7 +12,7 @@ class Application {
 
   public function run($server) {
     // set router here because this depends on get_smarty()
-    $this->router = new Router($this->route(), $this->get_smarty());
+    $this->router = new Router($this->route(), $this->get_smarty(), $this->get_doctrine());
     $req = new Request($_SERVER);
     $this->router->resolve($req);
   }
@@ -22,4 +22,5 @@ class Application {
   protected function boot_loader() {}
   protected function route() {}
   protected function get_smarty() {}
+  protected function get_doctrine() {}
 }
