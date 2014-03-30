@@ -3,7 +3,7 @@
 class Router {
   private $compiled_route;
   private $route;
-  function __Construct($route, $smarty, EntityManager $entity_manager) {
+  function __Construct($route, $smarty, \Doctrine\ORM\EntityManager $entity_manager) {
     $this->route = $route;
     $this->smarty = $smarty;
     $this->entity_manager = $entity_manager;

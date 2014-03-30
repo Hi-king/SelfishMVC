@@ -1,6 +1,6 @@
 <?php
 class Controller{
-  function __Construct($smarty, EntityManager $entity_manager) {
+  function __Construct($smarty, \Doctrine\ORM\EntityManager $entity_manager) {
     $this->smarty = $smarty;
     $this->entity_manager = $entity_manager;
   }

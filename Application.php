@@ -1,8 +1,7 @@
 <?php
-require_once 'core/CoreBootLoader.php';
-
 class Application {
   function __Construct() {
+    $this->coreBootLoader();
     // Load pathes
     $this->boot_loader();
     // avoid require using relative path
@@ -15,6 +14,10 @@ class Application {
     $this->router = new Router($this->route(), $this->get_smarty(), $this->get_doctrine());
     $req = new Request($_SERVER);
     $this->router->resolve($req);
+  }
+
+  protected function coreBootLoader() {
+    require_once 'core/CoreBootLoader.php';
   }
 
   protected function controller_loader() {}

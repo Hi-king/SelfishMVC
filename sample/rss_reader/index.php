@@ -2,11 +2,12 @@
 /*
   Application definition class
  */
-require_once 'vendor/autoload.php'; //composer
 require_once '../../Application.php';
+require_once __DIR__.'/vendor/autoload.php'; //composer
 
-use Doctorine\ORM\Tools\Setup;
-use Doctorine\ORM\EntityManager;
+//require_once __DIR__.'/vendor/doctrine/orm/lib/Doctrine/ORM/Tools/Setup.php';
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
 
 class RSSApplication extends Application {
   protected function route() {
@@ -34,6 +35,18 @@ class RSSApplication extends Application {
       ),
 
       //User
+      '/user/:name/' => array(
+        'controller' => 'UserController',
+        'action' => 'show_rss_list',
+        'argnames' => array('name')
+      ),
+      '/useradd/' => array(
+        'method' => 'GET',
+        'params' => array('name', 'url'),
+        'controller' => 'UserController',
+        'action' => 'add_rss',
+        'argnames' => array('name', 'url')
+      ),
       '/login/' => array(
         'controller' => 'UserController',
         'action' => 'login'
@@ -49,6 +62,7 @@ class RSSApplication extends Application {
   protected function boot_loader() {
     require_once __DIR__.'/models/User.php';
     require_once __DIR__.'/models/RSS.php';
+    require_once __DIR__.'/models/Page.php';
     require_once __DIR__.'/controllers/UserController.php';
     require_once __DIR__.'/controllers/RSSController.php';
   }
@@ -63,18 +77,23 @@ class RSSApplication extends Application {
     return $smarty;
   }
 
-  protected function get_doctrine() {
-    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/src"), $isDevMode);
+  public function get_doctrine() {
+    $isDevMode = true;
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(array(__DIR__."/models"), $isDevMode);
     $conn = array(
                   'driver'   => 'pdo_mysql',
                   'user'     => 'root',
                   'password' => '',
                   'dbname'   => 'rss_reader'
                   );
-    return EntityManager::create($conn, $config);
+    $entity_manager = EntityManager::create($conn, $config);
+    //$tool = new \Doctrine\ORM\Tools\SchemaTool($entity_manager);
+    //$tool->createSchema($entity_manager->getMetaDataFactory()->getAllMetaData());
+    return $entity_manager;
   }
 }
 
 // start Applitcation
-(new RSSApplication())->run($_SERVER);
+$app = new RSSApplication();
+$app->run($_SERVER);
 

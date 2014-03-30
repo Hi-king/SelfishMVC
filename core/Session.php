@@ -9,8 +9,14 @@ class Session{
     return session_id();
   }
 
-  public function getAttr(string $attrName){
-    throw new BadMethodCallException('Not Implemented');
-    exit(1);
+  public function setAttr($attrName, $val) {
+    $_SESSION[$attrName] = $val;
+  }
+
+  public function getAttr($attrName) {
+    if (! array_key_exists($attrName, $_SESSION)) {
+      throw new BadMethodCallException('key='.$attrName.' does not exist in $_SESSION');
+    }
+    return $_SESSION[$attrName];
   }
 }

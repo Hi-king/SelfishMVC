@@ -3,6 +3,11 @@
 body{
     padding-top: 50px;
 }
+
+ul.pull-right li{
+    font-size: 25px;
+    color: white;
+}
 /*div#container{
     padding:10%;
 }*/

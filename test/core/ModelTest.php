@@ -10,7 +10,7 @@ require_once __DIR__.'/models/User.php';
 class TestApplication extends Application {
   public function get_doctrine() {
     $isDevMode = true;
-    $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/models"), $isDevMode);
+    $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(array(__DIR__."/models"), $isDevMode);
     $conn = array(
                   'driver' => 'pdo_sqlite',
                   'memory' => true
@@ -22,7 +22,6 @@ class TestApplication extends Application {
 class ModelTest extends PHPUnit_Framework_TestCase {
   public function testPersist() {
     $app = new TestApplication();
-    
     $em = $app->get_doctrine();
 
     $tool = new \Doctrine\ORM\Tools\SchemaTool($em);
