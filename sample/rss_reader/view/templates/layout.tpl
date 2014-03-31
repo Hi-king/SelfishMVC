@@ -15,7 +15,16 @@
               <li><a class="brand" href="/selfish/index.php/top/">RSS Reader(β)</a></li>
             </ul>
             <ul class="nav pull-right">
-              <li>sessionid: {$uid}</li>
+              <li>user: {$uid}</li>
+              {if not ($uid eq "guest")}
+              <li>
+                  <a href="/selfish/index.php/logout/">
+                    <button type="button" class="btn btn-default">
+                      <span class="icon-remove"></span>
+                    </button>
+                  </a>
+              </li>
+              {/if}
             </ul>
           </div>
         </div>

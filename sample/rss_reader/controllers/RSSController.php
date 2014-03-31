@@ -4,28 +4,15 @@ class RSSController extends Controller{
     parent::__Construct($smarty, $entityManager);
   }
 
-  function hello($id) {
-    try{
-      User::login($id);
-      //TODO: wrap smarty ?
-      $this->smarty->assign('name', $id);
-      $this->smarty->assign('contents',
-        $this->smarty->fetch('hello.tpl')
-      );
-      $this->smarty->display('layout.tpl');
-    }catch (Exception $e){
-      $this->not_found("Wrong Username!");
-    }
-  }
   function top() {
-    
     $session = new Session();
     try {
       $uid = $session->getAttr('uid');
-      $found = $this->entity_manager->getRepository('User')->findBy(array('name' => $uid)nn);
+      $found = $this->entity_manager->getRepository('User')->findBy(array('name' => $uid));
       $user = $found[0];
+      HttpResponse::redirect("./selfish/index.php/user/".$user->getName()."/");
     } catch (BadMethodCallException $e) {
-      $user = new User($name, $this->entity_manager);
+      HttpResponse::redirect("./selfish/index.php/user/guest/");
     }
 
     $this->smarty->assign('contents',

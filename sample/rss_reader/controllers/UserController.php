@@ -30,16 +30,26 @@ class UserController extends Controller{
 
     $user->persist($this->entity_manager);
     $session->setAttr('uid', $user->getName());
+    HttpResponse::redirect("./selfish/index.php/top/");
+  }
+
+  function logout() {
+    $session = new Session();
+    $session->deleteAttr('uid');
+    HttpResponse::redirect("./selfish/index.php/top/");
   }
 
   function add_rss($name, $url) {
     //var_dump($name);
+    if($name=="guest") {
+      HttpResponse::redirect("./selfish/index.php/login/");
+    }
+
     $found = $this->entity_manager->getRepository('User')->findBy(array('name' => $name));
     $user = $found[0];
-    var_dump($url);
-    var_dump(new RSS($url, $this->entity_manager));
     $user->getFeeds()->add(new RSS($url, $this->entity_manager));
     $user->persist($this->entity_manager);
+    HttpResponse::redirect("./selfish/index.php/top/");
   }
 
   function show_rss_list($name) {
@@ -47,14 +57,16 @@ class UserController extends Controller{
     $uid = 'guest';
     try {
       $uid = $session->getAttr('uid');
+      $found = $this->entity_manager->getRepository('User')->findBy(array('name' => $name));
+      $user = $found[0];
+      $feeds = $user->getFeeds();
     } catch (BadMethodCallException $e) {
       $uid = 'guest';
+      $feeds = $this->entity_manager->getRepository('RSS')->findAll();
     }
 
-    $found = $this->entity_manager->getRepository('User')->findBy(array('name' => $name));
-    $user = $found[0];
     $this->smarty->assign('uid', $uid);
-    $this->smarty->assign('feeds', $user->getFeeds());
+    $this->smarty->assign('feeds', $feeds);
     $this->smarty->assign('contents',
       $this->smarty->fetch('urllist.tpl')
     );

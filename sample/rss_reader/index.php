@@ -12,11 +12,6 @@ use Doctrine\ORM\EntityManager;
 class RSSApplication extends Application {
   protected function route() {
     return array(
-      '/hello/:id/' => array(
-        'controller' => 'RSSController',
-        'action' => 'hello',
-        'argnames' => array('id')
-      ),
       '/top/' => array(
         'controller' => 'RSSController', 
         'action' => 'top'
@@ -40,7 +35,7 @@ class RSSApplication extends Application {
         'action' => 'show_rss_list',
         'argnames' => array('name')
       ),
-      '/useradd/' => array(
+      '/feeds/add/' => array(
         'method' => 'GET',
         'params' => array('name', 'url'),
         'controller' => 'UserController',
@@ -50,6 +45,10 @@ class RSSApplication extends Application {
       '/login/' => array(
         'controller' => 'UserController',
         'action' => 'login'
+      ),
+      '/logout/' => array(
+        'controller' => 'UserController',
+        'action' => 'logout'
       ),
       '/logged_in' => array(
         'controller' => 'UserController',
