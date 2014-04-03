@@ -16,7 +16,15 @@
             </ul>
             <ul class="nav pull-right">
               <li>user: {$uid}</li>
-              {if not ($uid eq "guest")}
+              {if $uid eq "guest"}
+              <li>
+                  <a href="/selfish/index.php/login/">
+                    <button type="button" class="btn btn-default">
+                      login
+                    </button>
+                  </a>
+              </li>
+              {else}
               <li>
                   <a href="/selfish/index.php/logout/">
                     <button type="button" class="btn btn-default">
