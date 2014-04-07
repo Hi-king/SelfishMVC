@@ -28,7 +28,7 @@ class ModelTest extends PHPUnit_Framework_TestCase {
     $tool->createSchema($em->getMetaDataFactory()->getAllMetaData());
 
     $test_user = new User("Alice", $em);
-    $test_user->persist();
+    $test_user->persist($em);
     $users = $em->getRepository('User')->findAll();
     var_dump($users[0]->getName());
   }
