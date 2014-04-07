@@ -2,7 +2,7 @@
 require_once '/usr/local/lib/Smarty-3.1.15/libs/Smarty.class.php';
 require_once __DIR__.'/../../vendor/autoload.php';
 require_once __DIR__.'/../../Application.php';
-require_once dirname(__FILE__).'/../../core/Controller.php';
+require_once __DIR__.'/../../core/Controller.php';
 
 class TestApplication extends Application {
   public function get_doctrine() {
